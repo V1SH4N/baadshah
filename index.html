@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 50px;
             text-align: center;
             background-color: #f0f0f0;
         }
@@ -17,26 +17,74 @@
             background-color: #f9f9f9;
         }
         #downloadBtn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 18px;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
             cursor: pointer;
         }
         form {
             margin-top: 20px;
         }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        #receiptForm {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+
+        #receiptForm label {
+            font-size: 16px;
+        }
+
+        #receiptForm input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin:0;
+        }
+
+        button:hover {
+            background-color: #3385cc;
+        }
+
+
     </style>
 </head>
 <body>
+    
     <form id="receiptForm">
         <label for="amount">Amount:</label>
-        <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" id="amount" name="amount" required>
+        <input type="number" id="amount" name="amount" step="any"  required>
         <label for="number">Number:</label>
-        <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" id="Number" name="Number" required>
-        <button type="submit">Generate Receipt</button>
+        <input type="number" id="number" name="number" step="any"  required>
+        <button type="submit" id ="submitBtn">Generate Receipt</button>
     </form>
     <canvas id="receiptCanvas" width="828" height="1792"></canvas>
     <button id="downloadBtn" style="display:none;">Download Image</button>
+    
 
     <script>
         const canvas = document.getElementById('receiptCanvas');
@@ -147,6 +195,8 @@
             
             drawReceipt(totalAmount, number, date, time);
             downloadBtn.style.display = 'block';
+            document.getElementById("submitBtn").style.display = 'none';
+            document.getElementById("downloadBtn").style.display = 'block';
         });
 
         
@@ -158,6 +208,7 @@
                 link.click();
             }, "image/png");
             document.getElementById("downloadBtn").style.display = 'none';
+            document.getElementById("submitBtn").style.display = 'block';
         });
     </script>
 </body>
