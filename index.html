@@ -139,6 +139,7 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             const totalAmount = document.getElementById('amount').value;
+            amount = "MUR " + amount;
             const number = document.getElementById('number').value;
             const date = getFormattedDate();
             const time = getCurrentTime();
@@ -155,6 +156,7 @@
                 link.href = URL.createObjectURL(blob);
                 link.click();
             }, "image/png");
+            document.getElementById("downloadBtn").style.display = 'none';
         });
     </script>
 </body>
