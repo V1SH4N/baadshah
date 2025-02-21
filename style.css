@@ -12,9 +12,7 @@ canvas {
 }
 
 form {
-
     width: 90%;
-    max-width: 750px; 
     margin: auto; 
     display: flex;
     flex-direction: column;
@@ -32,8 +30,8 @@ form input {
 }
 
 button {
+    margin: 0;
     width: 90%;
-    max-width: 750px;
     padding: 10px;
     font-size: 16px;
     background-color: #4da6ff;
