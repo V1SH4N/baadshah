@@ -11,15 +11,15 @@
 <body>
     <div id="login"> 
         <form id="passwordForm">
-            <input type="password" id="password" placeholder="Enter password" required>
+            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="password" placeholder="Enter password" required>
             <button type="submit">Submit</button>
         </form>
     </div>
     
     <div id="main" style="display: none;">
         <form id="receiptForm">
-            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="amount" name="amount" placeholder="Enter amount" required>
-            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="number" name="number" placeholder="Enter number" required>
+            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="amount" placeholder="Enter amount" required>
+            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="number" placeholder="Enter number" required>
             <button type="submit" id="submitBtn">Generate Receipt</button>
         </form>
         <canvas id="receiptCanvas" width="828" height="1792"></canvas>
