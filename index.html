@@ -5,215 +5,25 @@
     <meta name="viewport" content="width=828, height=1792, initial-scale=1.0">
     <title>Baadshah</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 50px;
-            text-align: center;
-            background-color: #f0f0f0;
-        }
-        canvas {
-            display: none;
-            margin: 0;
-            background-color: #f9f9f9;
-        }
-        #downloadBtn {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        form {
-            margin-top: 20px;
-        }
-
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-
-        #receiptForm {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 300px;
-        }
-
-        #receiptForm label {
-            font-size: 16px;
-        }
-
-        #receiptForm input {
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 300px;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #4da6ff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin:0;
-        }
-
-        button:hover {
-            background-color: #3385cc;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
 </head>
 <body>
+    <div id="login"> 
+        <form id="passwordForm">
+            <input type="password" id="password" placeholder="Enter password" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     
-    <form id="receiptForm">
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" step="any"  required>
-        <label for="number">Number:</label>
-        <input type="number" id="number" name="number" step="any"  required>
-        <button type="submit" id ="submitBtn">Generate Receipt</button>
-    </form>
-    <canvas id="receiptCanvas" width="828" height="1792"></canvas>
-    <button id="downloadBtn" style="display:none;">Download Image</button>
-    
-
-    <script>
-        const canvas = document.getElementById('receiptCanvas');
-        const ctx = canvas.getContext('2d');
-        const form = document.getElementById('receiptForm');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        function getCurrentTime() {
-            const currentTime = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-            return currentTime.toLocaleTimeString('en-GB', options);
-        }
-
-        function getFormattedDate() {
-            const currentDate = new Date();
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            return currentDate.toLocaleDateString('en-GB', options);
-        }
-
-
-
-        function drawReceipt(totalAmount, number, date, time) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            //top
-            const image = new Image();
-            image.src = './images/top3.png'; 
-            image.onload = function() {
-                ctx.drawImage(image, 0, 0);
-                
-                //Time
-                const blank = new Image();
-                blank.src = './images/blank.png'; 
-                blank.onload = function() {
-                    ctx.drawImage(blank, 0, 0);
-                    ctx.fillStyle = "black";
-                    ctx.font = "600 34px SF Pro, sans-serif";
-                    ctx.fillText(time, 60, 60);
-                }
-            };
-            
-
-            //mid
-            const image3 = new Image();
-            image3.src = './images/mid.png'; 
-            image3.onload = function() {
-                ctx.drawImage(image3, 0, 615);
-            };
-
-            //bottom
-            const image1 = new Image();
-            image1.src = './images/bottom.png';
-            image1.onload = function() {
-                ctx.drawImage(image1,0 , 887);
-            };
-
-
-            // Background
-            ctx.fillStyle = "#f9f9f9";
-            ctx.fillRect(0, 20, canvas.width, canvas.height);
-            ctx.fillStyle = "#dce8f4";
-            ctx.fillRect(32, 20, canvas.width - 64, canvas.height - 40);
-
-            Text
-            document.fonts.load("31px Lato").then(() => {
-                ctx.font = "31px Lato";
-                ctx.fillStyle = "#0f1217";
-                ctx.fillText(totalAmount, 65, 437);
-
-                ctx.font = " 27px Lato";
-                ctx.fillStyle = "#4c555c"
-                ctx.fillText("Beneficiary", 65, 502);
-
-                ctx.fillStyle = "#0f1217";
-                ctx.font = "31px Lato";
-                ctx.fillText(number, 65, 547);
-
-                ctx.font = " 27px Lato";
-                ctx.fillStyle = "#4c555c"
-                ctx.fillText("From", 65, 613);
-
-            
-                ctx.font = " 27px Lato";
-                ctx.fillStyle = "#4c555c"
-                ctx.fillText("Transaction reference", 65, 724);
-
-
-                ctx.fillStyle = "#0f1217";
-                ctx.font = "31px Lato";
-                ctx.fillText("FT25030MK37K", 65, 770);
-
-                ctx.font = " 27px Lato";
-                ctx.fillStyle = "#4c555c"
-                ctx.fillText("Date", 65, 835);
-
-
-                ctx.fillStyle = "#0f1217";
-                ctx.font = "31px Lato";
-                ctx.fillText(date, 65, 880);
-            });
-
-
-        }
-
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            let totalAmount = document.getElementById('amount').value;
-            totalAmount = "MUR " + totalAmount + ".00"; 
-            const number = document.getElementById('number').value;
-            const date = getFormattedDate();
-            const time = getCurrentTime();
-            
-            drawReceipt(totalAmount, number, date, time);
-            downloadBtn.style.display = 'block';
-            document.getElementById("downloadBtn").style.display = 'block';
-        });
-
-        
-        document.getElementById("downloadBtn").addEventListener("click", function () {
-            canvas.toBlob(function (blob) {
-                const link = document.createElement("a");
-                link.download = "canvas-image.png";
-                link.href = URL.createObjectURL(blob);
-                link.click();
-            }, "image/png");
-            document.getElementById("downloadBtn").style.display = 'none';
-        });
-    </script>
+    <div id="main" style="display: none;">
+        <form id="receiptForm">
+            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="amount" name="amount" placeholder="Enter amount" required>
+            <input type="tel" pattern="[0-9]*" inputmode="numeric" id="number" name="number" placeholder="Enter number" required>
+            <button type="submit" id="submitBtn">Generate Receipt</button>
+        </form>
+        <canvas id="receiptCanvas" width="828" height="1792"></canvas>
+        <button id="downloadBtn" style="display:none;">Download Image</button>
+    </div>
 </body>
 </html>
